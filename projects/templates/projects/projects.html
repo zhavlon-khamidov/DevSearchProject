@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>All Projects</h1>
+
+{% if num > 10 %}
+<p>Number is greater than 10</p>
+{% elif num == 10 %}
+<p>Number is equal to 10</p>
+{% else %}
+<p>Number is less than 10</p>
+{% endif %}
+
+<ol>
+    {% for project in projects %}
+    <li> <a href="{% url 'project' project.id %}">{{project.title}}</a> - {{project.description}} </li>
+    {% endfor %}
+</ol>
+{% endblock content %}
+
+{% block title %}
+All Projects
+{% endblock %}
