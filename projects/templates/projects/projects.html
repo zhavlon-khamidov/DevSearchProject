@@ -13,7 +13,7 @@
 
 <ol>
     {% for project in projects %}
-    <li> <a href="{% url 'project' project.id %}">{{project.title}}</a> - {{project.description}} </li>
+    <li> <a href="{% url 'project' project.id %}">{{project.title}}</a> - {{project.created_date}} </li>
     {% endfor %}
 </ol>
 {% endblock content %}
