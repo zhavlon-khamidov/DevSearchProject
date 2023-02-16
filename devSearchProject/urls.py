@@ -19,6 +19,9 @@ import projects.urls
 
 from django.http import HttpResponse
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 def helloHandler(httpRequest):
     httpResponse = HttpResponse("<h1>Hello, World!</h1>")
     return httpResponse
@@ -28,4 +31,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello', helloHandler), # for introduction
     path('',include(projects.urls)) # need to know my project that we have paths in other file
-]
+] 
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
