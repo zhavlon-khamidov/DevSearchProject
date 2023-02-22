@@ -4,6 +4,7 @@ from django.db import models
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
+    photo = models.ImageField(blank=True, null=True,default='default.svg')
     tags = models.ManyToManyField('Tag')
     review_number = models.IntegerField(default=0)
     review_total = models.IntegerField(default=0)

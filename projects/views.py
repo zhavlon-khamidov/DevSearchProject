@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from .models import Project
 from .forms import ProjectForm
 
@@ -14,11 +14,11 @@ def project(request, pk):
     return render(request, 'projects/single-project.html',{'project': project})
 
 
-def createProject(request):
+def createProject(request : HttpRequest):
     form = ProjectForm()
     if request.method == 'POST':
         print(request.POST)
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('projects')
@@ -33,7 +33,7 @@ def editProject(request, pk):
     form = ProjectForm(instance=project)
     if request.method == 'POST':
         print(request.POST)
-        form = ProjectForm(request.POST, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
             return redirect('projects')
