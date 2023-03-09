@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import projects.urls
+import users.urls
 
 from django.http import HttpResponse
 
@@ -30,6 +31,7 @@ def helloHandler(httpRequest):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello', helloHandler), # for introduction
+    path('user/',include(users.urls)),
     path('',include(projects.urls)) # need to know my project that we have paths in other file
 ] 
 
