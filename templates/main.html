@@ -12,6 +12,25 @@
 <body>
     {% include 'header.html' %}
 
+    {% if messages %}
+<style>
+    ul.messages {
+        list-style-type: none;
+        padding: 5px;
+        margin:5px;
+    }
+    ul.messages > li {
+        border: 1px solid red;
+        background-color: #fcbbbb;
+    }
+</style>
+
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     {% block content %}
     <p>test content</p>
     {% endblock content%}
