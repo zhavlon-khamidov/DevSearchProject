@@ -11,12 +11,23 @@
     </tr>
     {% for project in projects %}
     <tr>
-        <td><a href="{% url 'project' project.id %}">{{project.title}}</a></td>
-        <td><a href="{% url 'edit-project' project.id %}">Edit</a></td>
-        <td><a href="{% url 'delete-project' project.id %}">Delete</a></td>
+        <td><a href="{% url 'project' project.pk %}">{{project.title}}</a></td>
+        <td><a href="{% url 'edit-project' project.pk %}">Edit</a></td>
+        <td><a href="{% url 'delete-project' project.pk %}">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
+
+    <div class="paginator">
+        {% for page in page_range %}
+            {% if projects.number == page %}
+            <span>{{ page }}</span>
+            {% else %}
+                <a href="?page={{ page }}">{{ page }}</a>
+
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock content %}
 
 {% block title %}

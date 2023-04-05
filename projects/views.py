@@ -1,23 +1,37 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from .models import Project
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
 
+
 @login_required
 def projects(request):
-    allProjects = Project.objects.all()
-    return render(request,'projects/projects.html',
-        {'projects' : allProjects})
+    all_projects = Project.objects.all().order_by('created_date')
+    page = 1
+    if request.GET.get('page'):
+        page = int(request.GET.get('page'))
+    per_page = 5
+    paginator = Paginator(all_projects, per_page)
+    page_range = paginator.page_range
+    all_projects = paginator.page(page)
+    return render(request, 'projects/projects.html',
+                  {
+                      'projects': all_projects,
+                      'page_range':page_range,
+                  })
+
 
 @login_required
 def project(request, pk):
-    project = Project.objects.get(id=pk)
-    
-    return render(request, 'projects/single-project.html',{'project': project})
+    custom_project = Project.objects.get(id=pk)
+
+    return render(request, 'projects/single-project.html', {'project': custom_project})
+
 
 @login_required
-def createProject(request : HttpRequest):
+def create_project(request: HttpRequest):
     form = ProjectForm()
     if request.method == 'POST':
         print(request.POST)
@@ -26,30 +40,30 @@ def createProject(request : HttpRequest):
             form.save()
             return redirect('projects')
 
-    
-    context = {'form':form}
-    return render(request,'projects/project-form.html', context)
+    context = {'form': form}
+    return render(request, 'projects/project-form.html', context)
+
 
 @login_required
-def editProject(request, pk):
-    project = Project.objects.get(id=pk)
-    form = ProjectForm(instance=project)
+def edit_project(request, pk):
+    custom_project = Project.objects.get(id=pk)
+    form = ProjectForm(instance=custom_project)
     if request.method == 'POST':
         print(request.POST)
-        form = ProjectForm(request.POST, request.FILES, instance=project)
+        form = ProjectForm(request.POST, request.FILES, instance=custom_project)
         if form.is_valid():
             form.save()
             return redirect('projects')
 
-    
-    context = {'form':form}
-    return render(request,'projects/project-form.html', context)
+    context = {'form': form}
+    return render(request, 'projects/project-form.html', context)
+
 
 @login_required
-def deleteProject(request, pk):
-    project = Project.objects.get(id=pk)
+def delete_project(request, pk):
+    custom_project = Project.objects.get(id=pk)
     if request.method == 'POST':
-        project.delete()
+        custom_project.delete()
         return redirect('projects')
-    context = {'project':project}
-    return render(request, 'projects/delete.html',context)
+    context = {'project': custom_project}
+    return render(request, 'projects/delete.html', context)
