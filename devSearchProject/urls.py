@@ -31,8 +31,8 @@ def helloHandler(httpRequest):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello', helloHandler), # for introduction
-    path('user/',include(users.urls)),
-    path('',include(projects.urls)) # need to know my project that we have paths in other file
+    path('user/', include(users.urls)),
+    path('', include(projects.urls)) # need to know my project that we have paths in other file
 ] 
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

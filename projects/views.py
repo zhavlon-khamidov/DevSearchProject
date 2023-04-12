@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
@@ -22,6 +23,13 @@ def projects(request):
                       'page_range':page_range,
                   })
 
+# go to localhost:8000/test-mail to send test mail
+def send_test_email(request):
+    send_mail(subject='test',
+              message='test message',
+              from_email='Developer',
+              recipient_list=['example@mail.com'])
+    return HttpResponse("Email Send")
 
 @login_required
 def project(request, pk):

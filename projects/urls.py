@@ -8,4 +8,6 @@ urlpatterns = [
     path('create-project/', views.create_project, name='create-project'),
     path('edit-project/<str:pk>', views.edit_project, name='edit-project'),
     path('delete-project/<str:pk>', views.delete_project, name='delete-project'),
+
+    path('test-mail', views.send_test_email),
 ]
