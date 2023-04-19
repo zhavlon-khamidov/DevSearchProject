@@ -20,8 +20,9 @@ def projects(request):
     return render(request, 'projects/projects.html',
                   {
                       'projects': all_projects,
-                      'page_range':page_range,
+                      'page_range': page_range,
                   })
+
 
 # go to localhost:8000/test-mail to send test mail
 def send_test_email(request):
@@ -30,6 +31,7 @@ def send_test_email(request):
               from_email='Developer',
               recipient_list=['example@mail.com'])
     return HttpResponse("Email Send")
+
 
 @login_required
 def project(request, pk):

@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+import api.urls
 import projects.urls
 import users.urls
 
@@ -32,7 +34,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello', helloHandler), # for introduction
     path('user/', include(users.urls)),
-    path('', include(projects.urls)) # need to know my project that we have paths in other file
+    path('', include(projects.urls)), # need to know my project that we have paths in other file
+    path('api/', include(api.urls)),
 ] 
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
